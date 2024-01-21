@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>YT PLAYER</title>
   <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Page by Anshpreet">
   <script src="script.js" defer></script>
 </head>
 <body>
@@ -77,19 +78,36 @@
         </button>
       </div>
     </div>
-   <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Get the current URL fragment
-            var fragment = window.location.hash.substring(1);
+<video id="videoPlayer" controls autoplay width="640" height="360">
+    <!-- Default video source -->
+    <source src="default-video.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
 
-            // Check if the fragment contains a video URL
-            if (fragment.startsWith("https://")) {
-                // Replace the video URL with the <video> tag
-                var videoTag = '<video src="' + fragment + '" controls></video>';
-                document.body.innerHTML = videoTag;
-            }
-        });
-    </script>
+<script>
+    // Function to extract video URL from the fragment of the page URL
+    function getVideoUrlFromFragment() {
+        var url = window.location.href;
+        var fragmentIndex = url.indexOf('#');
+
+        if (fragmentIndex !== -1) {
+            // Extract video URL from the fragment
+            var videoUrl = url.substring(fragmentIndex + 1);
+            return videoUrl;
+        }
+
+        return null;
+    }
+
+    // Get the video URL from the fragment
+    var videoUrlFromFragment = getVideoUrlFromFragment();
+
+    // Update the video source if a video URL is found
+    if (videoUrlFromFragment) {
+        var videoPlayer = document.getElementById('videoPlayer');
+        videoPlayer.src = videoUrlFromFragment;
+    }
+</script>
       <track kind="captions" srclang="en" src="assets/subtitles.vtt">
     </video>
   </div>
